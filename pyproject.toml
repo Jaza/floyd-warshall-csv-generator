@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "floyd-warshall-csv-generator"
+version = "0.1.0"
+description = "Takes a CSV of graph edges as input, and generates a CSV of the edges that are the shortest paths between all pairs of vertices."
+authors = ["Jeremy Epstein <jazepstein@gmail.com>"]
+homepage = "https://github.com/Jaza/floyd-warshall-csv-generator"
+readme = "README.md"
+license = "Apache-2.0"
+packages = [{include = "floyd_warshall_csv_generator"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4"
+typer = "^0.12.3"
+scipy = "^1.13.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+black = "*"
+flake8 = "*"
+mypy = "*"
+isort = "*"
+pytest-cov = "*"
+autoflake = "*"
+ipython = "*"
+bandit = {extras = ["toml"], version = "*"}
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.isort]
+profile = "black"
+lines_after_imports = 2
+
+[tool.bandit]
+skips = ["B101"]
+
+[tool.poetry.scripts]
+cli = 'floyd_warshall_csv_generator.main:app'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
