@@ -1,6 +1,6 @@
+import sys
 from collections.abc import Iterable
 from csv import DictReader, DictWriter
-from sys import stdout
 from typing import Any
 
 from numpy import ndarray
@@ -115,11 +115,12 @@ def generate_floyd_warshall_csv(
         input_matrix, directed=directed, unweighted=unweighted
     )
 
-    if not isinstance(output_matrix, ndarray):
+    if not isinstance(output_matrix, ndarray):  # pragma: no cover
         raise ValueError("output_matrix is not an ndarray")
 
     output_graph = output_matrix.tolist()
-    writer = DictWriter(stdout, fieldnames=fieldnames)
+    writer = DictWriter(sys.stdout, fieldnames=fieldnames)
+    writer.writeheader()
 
     write_output_graph(
         writer=writer,
