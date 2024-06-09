@@ -4,6 +4,8 @@ Takes a CSV of graph edges as input, and generates a CSV of the edges that are t
 
 Calculates output edges using [scipy.sparse.csgraph.floyd_warshall](https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csgraph.floyd_warshall.html).
 
+For more information, see the article [Introducing Floyd-Warshall CSV Generator](https://greenash.net.au/thoughts/2024/06/introducing-floyd-warshall-csv-generator/).
+
 
 ## Getting started
 
