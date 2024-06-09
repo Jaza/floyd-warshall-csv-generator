@@ -63,21 +63,32 @@ def write_output_graph(
     vertex_i_column_name: str = "vertex_i",
     vertex_j_column_name: str = "vertex_j",
     weight_column_name: str = "weight",
+    directed: bool = True,
+    max_weight: float = 0.0,
 ):
+    seen: set[tuple[str, str]] = set()
+
     for i, output_graph_for_i in enumerate(output_graph):
         for j, output_graph_for_j in enumerate(output_graph_for_i):
             weight = float(output_graph_for_j)
 
-            if weight:
+            if weight and (not max_weight or weight <= max_weight):
                 vertex_i_name = vertex_name_list[i]
                 vertex_j_name = vertex_name_list[j]
-                writer.writerow(
-                    {
-                        vertex_i_column_name: vertex_i_name,
-                        vertex_j_column_name: vertex_j_name,
-                        weight_column_name: weight,
-                    }
-                )
+                vertex_names_sorted = sorted([vertex_i_name, vertex_j_name])
+                vertex_names = (vertex_names_sorted[0], vertex_names_sorted[1])
+
+                if directed or (vertex_names not in seen):
+                    writer.writerow(
+                        {
+                            vertex_i_column_name: vertex_names[0],
+                            vertex_j_column_name: vertex_names[1],
+                            weight_column_name: weight,
+                        }
+                    )
+
+                    if not directed:
+                        seen.add(vertex_names)
 
 
 @app.command()
@@ -88,6 +99,7 @@ def generate_floyd_warshall_csv(
     weight_column_name: str = "weight",
     directed: bool = True,
     unweighted: bool = False,
+    max_weight: float = 0.0,
 ):
     fieldnames = [vertex_i_column_name, vertex_j_column_name]
 
@@ -129,4 +141,6 @@ def generate_floyd_warshall_csv(
         vertex_i_column_name=vertex_i_column_name,
         vertex_j_column_name=vertex_j_column_name,
         weight_column_name=weight_column_name,
+        directed=directed,
+        max_weight=max_weight,
     )
