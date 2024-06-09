@@ -73,9 +73,7 @@ def write_output_graph(
             weight = float(output_graph_for_j)
 
             if weight and (not max_weight or weight <= max_weight):
-                vertex_i_name = vertex_name_list[i]
-                vertex_j_name = vertex_name_list[j]
-                vertex_names_sorted = sorted([vertex_i_name, vertex_j_name])
+                vertex_names_sorted = sorted([vertex_name_list[i], vertex_name_list[j]])
                 vertex_names = (vertex_names_sorted[0], vertex_names_sorted[1])
 
                 if directed or (vertex_names not in seen):
